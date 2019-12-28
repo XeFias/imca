@@ -67,7 +67,7 @@
 #ifndef __APPLE__
 #include <time.h>
 struct timespec tp;
-double begin, end;
+double g_begin, g_end;
 #endif
 
 /* List of possible models */
@@ -536,7 +536,7 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal unbounded reachability, please wait.\n");
 			if(!is_val){
@@ -548,8 +548,8 @@ int main(int argc, char* argv[]) {
 			}
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -557,7 +557,7 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal unbounded reachability, please wait.\n");
 			if(!is_val){
@@ -569,8 +569,8 @@ int main(int argc, char* argv[]) {
 			}
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -580,7 +580,7 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal expected time, please wait.\n");
 			if(!is_val){
@@ -592,8 +592,8 @@ int main(int argc, char* argv[]) {
 			}
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -601,7 +601,7 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal expected time, please wait.\n");
 			if(!is_val) {
@@ -613,8 +613,8 @@ int main(int argc, char* argv[]) {
 			}
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -624,15 +624,15 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal expected reward, please wait.\n");
 			tmp=expected_reward_value_iteration(ma,true);
 			printf("Maximal expected reward: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -640,15 +640,15 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal expected reward, please wait.\n");
 			tmp=expected_reward_value_iteration(ma,false);
 			printf("Minimal expected reward: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -658,15 +658,15 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal LRA, please wait.\n");
 			tmp=compute_long_run_average(ma,true);
 			printf("Maximal LRA: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -674,15 +674,15 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal LRA, please wait.\n");
 			tmp=compute_long_run_average(ma,false);
 			printf("Minimal LRA: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -710,15 +710,15 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal LRR, please wait.\n");
 			tmp=compute_long_run_reward(ma,true);
 			printf("Maximal LRR: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -726,15 +726,15 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal LRR, please wait.\n");
 			tmp=compute_long_run_reward(ma,false);
 			printf("Minimal LRR: %.10g\n", tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -756,7 +756,7 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal time-bounded reachability inside interval [%g,%g] with precision %g, please wait.\n", ta, tb, epsilon);
 			tmp=compute_time_bounded_reachability(ma,true,epsilon,ta,tb,is_imc,interval,interval_start);
@@ -766,8 +766,8 @@ int main(int argc, char* argv[]) {
 				printf("tb=%.5g Maximal time-bounded reachability probability: %.10g\n", tb,tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -775,7 +775,7 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal time-bounded reachability inside interval [%g,%g] with precision %g, please wait.\n", ta, tb, epsilon);
 			tmp=compute_time_bounded_reachability(ma,false,epsilon,ta,tb,is_imc,interval,interval_start);
@@ -785,8 +785,8 @@ int main(int argc, char* argv[]) {
 				printf("tb=%.5g Maximal time-bounded reachability probability: %.10g\n", tb,tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -799,7 +799,7 @@ int main(int argc, char* argv[]) {
 		if(is_max_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute maximal time-bounded accumulated reward inside interval [%g,%g] with precision %g, please wait.\n", ta, tb, epsilon);
 			tmp=compute_time_bounded_accumulated_reward(ma,true,epsilon,ta,tb,is_imc,interval,interval_start);
@@ -809,8 +809,8 @@ int main(int argc, char* argv[]) {
 				printf("tb=%.5g Maximal time-bounded reward reachability probability: %.10g\n", tb,tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
@@ -818,7 +818,7 @@ int main(int argc, char* argv[]) {
 		if(is_min_present){
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			begin = 1e9*tp.tv_sec + tp.tv_nsec;
+			g_begin = 1e9*tp.tv_sec + tp.tv_nsec;
 			#endif
 			printf("\nCompute minimal time-bounded accumulated reward inside interval [%g,%g] with precision %g, please wait.\n", ta, tb, epsilon);
 			tmp=compute_time_bounded_accumulated_reward(ma,false,epsilon,ta,tb,is_imc,interval,interval_start);
@@ -828,8 +828,8 @@ int main(int argc, char* argv[]) {
 				printf("tb=%.5g Maximal time-bounded reward reachability probability: %.10g\n", tb,tmp);
 			#ifndef __APPLE__
 			clock_gettime(CLOCK_REALTIME, &tp);
-			end = 1e9*tp.tv_sec + tp.tv_nsec;
-			printf("Computation Time: %f seconds\n", (end-begin)*1e-9);
+			g_end = 1e9*tp.tv_sec + tp.tv_nsec;
+			printf("Computation Time: %f seconds\n", (g_end-g_begin)*1e-9);
 			#else
 			printf("Computation Time: ??? seconds\n");
 			#endif
