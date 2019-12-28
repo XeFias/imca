@@ -145,13 +145,15 @@ BCG_TYPE_OBJECT_TRANSITION bcg_graph;
 /* The following function displays an edge 
  * and safes it to either dstring markovian, or to dstring nonmarkovian
  */
-void bcg_print_edge (bcg_graph, bcg_state_1, bcg_label_number, bcg_state_2, markovian, nonmarkovian)
+void bcg_print_edge (bcg_graph, bcg_state_1, bcg_label_number, bcg_state_2, markovian, probability, nonmarkovian, prob_label_string)
 BCG_TYPE_OBJECT_TRANSITION bcg_graph;
 BCG_TYPE_STATE_NUMBER bcg_state_1;
 BCG_TYPE_LABEL_NUMBER bcg_label_number;
 BCG_TYPE_STATE_NUMBER bcg_state_2;
 dstring *markovian;
+dstring *probability;
 dstring *nonmarkovian;
+dstring *prob_label_string;
 {
 	BCG_TYPE_C_STRING bcg_label_string;
 	BCG_TYPE_BOOLEAN bcg_visible;
@@ -174,7 +176,7 @@ dstring *nonmarkovian;
 	printf ("\t\tlabel string = %s\n", bcg_label_string);
 
 	//ignore selfloops (due to DFT condition)
-	if(bcg_state_1!=bcg_state_2) {
+/*	if(bcg_state_1!=bcg_state_2) {
 		// add edge
 		if(strncmp(bcg_label_string,"rate",4)==0){
 			dstring_printf(markovian,"* s%lu %s\n",bcg_state_2,bcg_label_string+5); // obtain the rate from string
@@ -183,6 +185,20 @@ dstring *nonmarkovian;
 			dstring_printf(nonmarkovian,"* s%lu 1\n",bcg_state_2);
 		}
 	}
+*/
+	if(bcg_state_1!=bcg_state_2) {
+		// add edge
+		if(strncmp(bcg_label_string,"rate",4)==0){
+			dstring_printf(markovian,"* s%lu %s\n",bcg_state_2,bcg_label_string+5); // obtain the rate from string
+		} else if(strncmp(bcg_label_string,"prob",4)==0){
+			dstring_printf(probability,"* s%lu %s\n",bcg_state_2,bcg_label_string+5); // obtain the prob from string
+		} else {
+			dstring_printf(prob_label_string,"%s",bcg_label_string);
+			dstring_printf(nonmarkovian,"s%lu %s\n",bcg_state_1,bcg_label_string);
+			dstring_printf(nonmarkovian,"* s%lu 1\n",bcg_state_2);
+		}
+	}
+
 
 	//free(bcg_label_string);
 }
@@ -216,8 +232,9 @@ int main(int argc, char* argv[]) {
 	
 	BCG_OT_ITERATE_PLN (bcg_graph, bcg_s1, bcg_label_number, bcg_s2) {
 		bcg_gate = BCG_OT_LABEL_GATE (bcg_graph, bcg_label_number);
-		if(strcmp(bcg_gate,argv[3]) == 0)
+		if(strcmp(bcg_gate,argv[3]) == 0) { // Label to check for. CLI input.
 			fprintf(ma, "s%lu\n",bcg_s1);
+		}
 	} BCG_OT_END_ITERATE;
 	BCG_OT_READ_BCG_END (&bcg_graph);
 	
@@ -226,24 +243,32 @@ int main(int argc, char* argv[]) {
 	/* The following fragment of code reads and prints all the edges 
 	 * of a BCG graph, sorted by origin states in increasing order */
 	
+	dstring *prob_label_string = dstring_new();
 	dstring *markovian = dstring_new();
+	dstring *probability = dstring_new();
 	dstring *nonmarkovian = dstring_new();
 	
 	BCG_OT_READ_BCG_BEGIN (argv[1], &bcg_graph, 1);
 	bcg_nb_states = BCG_OT_NB_STATES (bcg_graph);
 	for (bcg_s1 = 0; bcg_s1 < bcg_nb_states; bcg_s1++) {
+		dstring_reset(prob_label_string);
 		dstring_reset(markovian);
+		dstring_reset(probability);
 		dstring_reset(nonmarkovian);
-		printf ("successors of state %lu:\n", bcg_s1);
 		BCG_OT_ITERATE_P_LN (bcg_graph, bcg_s1, bcg_label_number, bcg_s2)
 		{
-			bcg_print_edge (bcg_graph, bcg_s1, bcg_label_number, bcg_s2, markovian, nonmarkovian);
+			bcg_print_edge (bcg_graph, bcg_s1, bcg_label_number, bcg_s2, markovian, probability, nonmarkovian, prob_label_string);
 		} BCG_OT_END_ITERATE;
 		if (strcmp(markovian->s, "") != 0) {
 			fprintf(ma,"s%lu !\n",bcg_s1);
 			fprintf(ma,"%s", markovian->s);
 		}
-		fprintf(ma,"%s", nonmarkovian->s);
+		if (strcmp(probability->s, "") != 0) {
+			fprintf(ma,"s%lu %s\n",bcg_s1, prob_label_string->s);
+			fprintf(ma,"%s", probability->s);
+		}
+		// MA only contains markovian and probabilistic states.
+		//fprintf(ma,"%s", nonmarkovian->s);
 	}
 	BCG_OT_READ_BCG_END (&bcg_graph);
 	
